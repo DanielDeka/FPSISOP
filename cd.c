@@ -8,4 +8,11 @@ int main (int argc, char *argv[])
 		printf(2, "Kegunaan: pindah direktori\n");
 		exit();
 	}
+
+	if(chdir(argv[1])<0)
+	{
+		printf(1,"Gagal pindah direktori\n");
+	}
+
+	exit();
 }
