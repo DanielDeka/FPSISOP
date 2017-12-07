@@ -15,3 +15,14 @@ main(int argc, char *argv[])
   printf("Usage: touch files...\n");
   sysexit();
  }
+
+ for(i = 1 ; i < argc; i++){
+  file = open(argv[i], O_CREAT|O_RDWR)
+  
+  }
+  sysexit();
+ }
+
+sysexit();
+return 0;
+}
