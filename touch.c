@@ -16,9 +16,10 @@ main(int argc, char *argv[])
   sysexit();
  }
 
- for(i = 1 ; i < argc; i++){
-  file = open(argv[i], O_CREAT|O_RDWR)
-  
+for(i = 1 ; i < argc; i++){
+  if((file = open(argv[i], O_CREAT|O_RDWR)) < 0){
+  printf("touch : %s failed to create\n",argv[i]);
+  break;
   }
   sysexit();
  }
