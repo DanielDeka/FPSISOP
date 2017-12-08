@@ -6,15 +6,19 @@
 
 #define sized 256
 
+void ls(char *path);
+char* fmtname(char *path);
+
+
 int main(int argc, char argv[])
 {
   if(argc != 3){
-     printf(1, "Please, input the command as [mv src_file dest_file]\n");
+     printf(1, "Input commandnya seperti ini: [mv src_file dest_file]\n");
      exit();
   }
   int file_src = open(argv[1], O_RDONLY);
 	if (file_src == -1){
-		printf(1, "open source file failed\n");
+		printf(1, "Membuka source file gagal\n");
 		exit();
   }
   struct stat st;
