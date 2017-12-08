@@ -57,4 +57,15 @@ ls(char *path)
     close(fd);
     return;
   }
-}
+  switch(st.type){
+  case T_FILE:
+    printf("%s %d %d %d\n", fmtname(path), st.type, st.ino, st.size);
+    break;
+  
+  case T_DIR:
+    if(strlen(path) + 1 + NAME_MAX + 1 > sizeof buf){
+      fprintf(stderr, "ls: path too long\n");
+      break;
+    }
+  }
+  
