@@ -8,9 +8,9 @@ char buf[512];
 int
 main(int argc, char *argv[])
 {
-  int fd, dfd, r, w;
+  int fd, dfd, r;
   if(argc <= 2){
-    printf(2, "Pakai 2 argumen\n");
+    printf(1, "Pakai 2 argumen\n");
     exit();
   }
   
