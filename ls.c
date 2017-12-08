@@ -67,5 +67,23 @@ ls(char *path)
       fprintf(stderr, "ls: path too long\n");
       break;
     }
+     strcpy(buf, path);
+    p = buf+strlen(buf);
+    *p++ = '/';
+    while(read(fd, &de, sizeof(de)) == sizeof(de)){
+      if(de.d_ino == 0)
+        continue;
+      memmove(p, de.d_name, NAME_MAX);
+      p[NAME_MAX] = 0;
+      if(pathstat(buf, &st) < 0){
+        fprintf(stderr, "ls: cannot stat %s\n", buf);
+        continue;
+      }
+      printf("%s %d %d %d\n", fmtname(buf), st.type, st.ino, st.size);
+    }
+    break;
   }
+  close(fd);
+}
+  
   
