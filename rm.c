@@ -1,5 +1,10 @@
- #include "stat.h"
- #include "user.h"
+#include "user.h"
+#include "types.h"
+#include "stat.h"
+#include "fcntl.h"
+#include "fs.h"
+#include <assert.h>
+#include <stdarg.h>
 
 char* strcat(char* s1, char* s2){
     char* b = s1;
