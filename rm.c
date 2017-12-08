@@ -1,7 +1,6 @@
-#include "types.h"
-#include "stat.h"
-#include "user.h"
-
+ #include "stat.h"
+ #include "user.h"
+ 
 void rf(char *path){
   char a[512], *p;
   char *temp=malloc(100);
@@ -38,7 +37,7 @@ void rf(char *path){
         strcpy(temp,path);
         strcat(temp, "/");
         strcat(temp, fmtname(a));
-        strcat(temp, "/0');
+        strcat(temp, "/0");
         if(strcmp(fmtname(a),".") == 0)
              continue;
         if(strcmp(fmtname(a),"..") == 0)
@@ -51,13 +50,13 @@ void rf(char *path){
    unlink(path);
 }
 
-int main(int argc, char *argv[]){
-  int n;
-  if(argc < 2){
-    printf(2, "Usage: rm files...\n");
-    exit();
-  }
-  
+ int main(int argc, char *argv[]){
+   int n;
+   if(argc < 2){
+     printf(2, "Usage: rm files...\n");
+     exit();
+   }
+   
   if(!strcmp(argv[1], "-rf")){
     int k = open("aaa", 0_CREATE | 0_RDWR);
     char *a = malloc(100);
@@ -71,12 +70,8 @@ int main(int argc, char *argv[]){
     rf(temp);
     exit();
   }
-  for(n = 1; n < argc; n++){
-    if(unlink(argv[i]) < 0){
-      printf(2, "rm: %s failed to delete\n", argv[i]);
-      break;
-    }
-  }
-
-  exit();
+   for(n = 1; n < argc; n++){
+     if(unlink(argv[i]) < 0){
+       printf(2, "rm: %s failed to delete\n", argv[i]);
+   }
 }
