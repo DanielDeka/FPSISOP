@@ -6,7 +6,6 @@
 
 #define sized 256
 
-void ls(char *path);
 char* fmtname(char *path);
 
 
@@ -62,4 +61,20 @@ int main(int argc, char argv[])
   printf(1, "Menghapus source file gagal\n");
   
   exit();
+}
+
+char* fmtname(char *path){
+	static char buf[DIRSIZ+1];
+	char *p;
+	
+	
+	for(p=path+strlen(path); p >= path && *p != '/'; p--);
+	p++;
+	
+	
+	if(strlen(p) >= DIRSIZ)
+		return p;
+	memmove(buf, p, strlen(p));
+	memset(buf+strlen(p), ' ', DIRSIZ-strlen(p));
+	return buf;
 }
