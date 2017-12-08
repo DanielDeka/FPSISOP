@@ -85,5 +85,18 @@ ls(char *path)
   }
   close(fd);
 }
+int
+main(int argc, char *argv[])
+{
+  int i;
+
+  if(argc < 2){
+    ls(".");
+    sysexit();
+  }
+  for(i=1; i<argc; i++)
+    ls(argv[i]);
+  sysexit();
+}
   
   
