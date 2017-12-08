@@ -38,3 +38,23 @@ fmtname(char *path)
   memset(buf+strlen(p), ' ', NAME_MAX-strlen(p));
   return buf;
 }
+
+void
+ls(char *path)
+{
+  char buf[512], *p;
+  int fd;
+  struct dirent de;
+  struct stat st;
+  
+  if((fd = open(path, 0)) < 0){
+    fprintf(stderr, "ls: cannot open %s\n", path);
+    return;
+  }
+  
+  if(fstat(fd, &st) < 0){
+    fprintf(stderr, "ls: cannot stat %s\n", path);
+    close(fd);
+    return;
+  }
+}
