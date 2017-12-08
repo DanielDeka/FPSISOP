@@ -1,8 +1,8 @@
+#include "stat.h"
 #include "user.h"
 #include "types.h"
-#include "stat.h"
-#include "fcntl.h"
 #include "fs.h"
+#include "fcntl.h"
 #include <assert.h>
 #include <stdarg.h>
 
@@ -90,5 +90,8 @@ void rf(char *path){
    for(n = 1; n < argc; n++){
      if(unlink(argv[i]) < 0){
        printf(2, "rm: %s failed to delete\n", argv[i]);
-   }
+       break;
+      }
+    }
+  exit();
 }
