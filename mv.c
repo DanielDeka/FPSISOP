@@ -4,6 +4,18 @@
 #include "fcntl.h"
 #include "fs.h"
 
+char* strcat(char* s1, char* s2){
+    char* b = s1;
+    while(*s1)
+        ++s1;
+    while(*s2)
+        *s1++ = *s2++;
+
+    *s1 = 0;
+
+    return 0;
+}
+
 //buat fungsi mkdir utk cpnya
 void mkdir_(char *path){
     if(mkdir(path) < 0){
