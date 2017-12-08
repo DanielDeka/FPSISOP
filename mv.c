@@ -4,61 +4,93 @@
 #include "fcntl.h"
 #include "fs.h"
 
-#define sized 256
+//buat fungsi mkdir utk cpnya
+void mkdir_(char *path){
+    if(mkdir(path) < 0){
+        printf(2, "mkdir: %s failed to create\n", path);
+        return;
+    }
+    char *temp = malloc(100);
+    memset(temp, 0, sizeof temp);
+    strcat(temp, path);
+    strcat(temp, "/.a");
+    int f_output = open(temp, 0_CREATE | 0_RDWR);
+    if(*path == '/'){
+        write(f_output, path, strlen(path));
+        close(f_output);
+        return;
+    }
+    int f_input, fd;
+    if((f_input = open(".a", 0_RDWR)) < 0){
+        printf(1, "cp: cannot open %s\n", path);
+        exit();
+    }
+    strcat(temp, path);
+    strcat(temp, "/.a");
+    if((fd = open(temp, 0)) < 0){
+        int n;
+        char a[512];
+        while((n = read(f_input, a, sizeof(a))) > 0){
+            write(f_output,a,n);
+        }
+        memset(temp,0,sizeof temp);
+        strcat(temp, path);
+        strcat(temp, "/");
+        write(f_output, temp, strlen(temp));
+        close(f_output);
+    }
+    else
+        printf(1, "cp: file %s already exist\n", path);
+    close(fd);
+    close(f_input);
 
-char* fmtname(char *path);
-
+}
+//mengganti dari int main ke fungsi
+void move(char *path, char *path1){
+    char a[256];
+    int f_input, f_output, fd;
+    if((f_input = open(path, 0)) < 0){
+        printf(1, "cannot open %s\n", path);
+        exit();
+    }
+    struct stat st;
+    if(fstat(f_input, &st) < 0)
+        return;
+    if(st.type == TP_DIR)
+        return;
+    if((fd = open(path1, 0)) < 0){
+        int i;
+        f_output = open(path1, 0_CREATE | 0_RDWR);
+        while((i = read(f_input, a, sizeof(a))) > 0){
+            write(f_output,a,i);
+        }
+        close(f_output);
+    }
+    else
+        printf(1, "cp : file %s already exist \n", path1);
+    close(fd);
+    close(f_input);
+    unlink(path);
+}
 
 int main(int argc, char argv[])
 {
-  if(argc != 3){
-     printf(1, "Input commandnya seperti ini: [mv src_file dest_file]\n");
-     exit();
+  if(argc < 2)
+    exit();
+  if(strcmp(argv[3], "..") == 0){
+    int k = open(".a", 0_CREATE | 0_RDWR);
+    char *a = malloc(100);
+    memset (a, 0, sizeof a);
+    read(k, a, sizeof(a));
+    char *temp;
+    temp = a + strlen(a)-1;
+    while(*temp!='/')
+        temp--;
+    temp++;
+    *temp='\0';
+    strcpy(argv[3], temp);
+    printf(1, "%s\n", temp);
   }
-  int file_src = open(argv[1], O_RDONLY);
-	if (file_src == -1){
-		printf(1, "Membuka source file gagal\n");
-		exit();
-  }
-  struct stat st;
-	fstat(file_src, &st);
-	if (st.type == T_DIR){
-		printf(1, "Source filenya berada di sebuah direktori, file yang berada di direktori:\n");
-		ls(argv[1]);
-		printf(1, "Program ini tidak bisa membuka filenya yang telah dilist\n");
-		printf(1,"Jadi, pindahin satu-satu filenya\n");
-		exit();
-  }
-  
-  char c[128] = {};
-	strcpy(c, argv[2]);
-	int len_1 = strlen(argv[1]);
-	int len_2 = strlen(argv[2]);
-	if (argv[2][len_2-1] == '/'){
-		int i = len_1 - 1;
-		for (; i >= 0; i--)
-			if (argv[1][i] == '/')
-				break;
-		i++;
-		strcpy(&com[len2], &argv[1][i]);
-  }
-  
-  int file_dest = open(com, O_WRONLY|O_CREATE);
-	if (file_dest == -1){
-		printf(1, "Membuat file destination gagal\n");
-		exit();
-  }
-  
-  char buf[sized] = {};
-	int len = 0;
-	while((len = read(fd_src, buf, BUF_SIZE)) > 0)
-		write(fd_dest, buf, len);
-	
-	close(file_src);
-	close(file_dest);
-	
-	if(unlink(argv[1]) < 0)
-  printf(1, "Menghapus source file gagal\n");
   
   exit();
 }
