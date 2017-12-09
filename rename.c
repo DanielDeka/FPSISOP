@@ -26,8 +26,13 @@ int main(int argc, char *argv[]){
 		write(file2,buff,n);
 		}
 
+	if(unlink(argv[1]) < 0){
+		printf(2, "gagal hapus file %s\n", argv[1]);
+		exit();
+	}
+
 	close(f1);
 	close(f2);
-	
+
 	exit();
 }
