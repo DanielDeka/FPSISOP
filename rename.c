@@ -20,7 +20,7 @@ int main(int argc, char *argv[]){
 		exit();
 	}
 
-	f2 = open(argv[2], O_CREATE|O_RDWR)
+	f2 = open(argv[2], O_CREATE|O_RDWR);
 
 	while((n=read(file1, buff,sizeof(buff))) > 0){
 		write(file2,buff,n);
@@ -31,16 +31,3 @@ int main(int argc, char *argv[]){
 	
 	exit();
 }
-=======
-#include <syscall.h>
-#include <stdio.h>
-#include <assert.h>
-
-int rename(const char* src, const char* dst)
-{
-  assert(0 && "not implemented yet.");
-  return 0;
-}
-
-sysexit();
->>>>>>> 94cadf717a7e8f3484b69e2438005c45d79c9c86
