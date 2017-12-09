@@ -41,7 +41,7 @@ void mve(char *patha,char *pathb){
   char buf[1024];
   int finput,foutput,fd;
   if((finput = open(patha, 0)) < 0){
-    printf(1, "cp: caaernnot open %s\n", patha);
+    printf(1, "cp: cannot open %s\n", patha);
     exit();
   }
   struct stat st;
