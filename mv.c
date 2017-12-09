@@ -124,7 +124,7 @@ cpb(char *patha,char *pathb)
   close(fd);
 }
 
-//buat fungsi mkdir utk cpnya
+
 int main(int argc, char* argv[])
 {
 if(argc < 2)
