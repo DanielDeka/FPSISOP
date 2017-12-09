@@ -1,12 +1,13 @@
+#include "types.h"
 #include "stat.h"
 #include "user.h"
-#include "types.h"
 #include "fs.h"
 #include "fcntl.h"
 #include <assert.h>
 #include <stdarg.h>
 
-char* strcat(char* s1, char* s2){
+
+char* strcat(char* s1, const char* s2){
     char* b = s1;
     while(*s1)
         ++s1;
@@ -15,7 +16,26 @@ char* strcat(char* s1, char* s2){
 
     *s1 = 0;
 
-    return 0;
+    return b;
+}
+
+char*
+fmtname(char *path)
+{
+  static char buf[DIRSIZ+1];
+  char *p;
+
+  // Find first character after last slash.
+  for(p=path+strlen(path); p >= path && *p != '/'; p--)
+    ;
+  p++;
+
+  // Return blank-padded name.
+  if(strlen(p) >= DIRSIZ)
+    return p;
+  memmove(buf, p, strlen(p));
+  strcat(buf,"\0");
+  return p;
 }
 
 void rf(char *path){
@@ -25,15 +45,15 @@ void rf(char *path){
   int fd;
   struct dirent d;
   struct stat st;
-  
+ 
   if((fd = open(path, 0)) < 0 )
     return;
-  
+ 
   if(fstat(fd, &st) < 0){
     close(fd);
     return;
   }
-  
+ 
   switch(st.type){
     case T_FILE:
       break;
@@ -75,7 +95,7 @@ void rf(char *path){
    }
    
   if(!strcmp(argv[1], "-rf")){
-    int k = open("aaa", 0_CREATE | 0_RDWR);
+    int k = open(".a", O_CREATE | O_RDWR);
     char *a = malloc(100);
     memset(a,0,100);
     read(k, a, 100);
@@ -88,8 +108,8 @@ void rf(char *path){
     exit();
   }
    for(n = 1; n < argc; n++){
-     if(unlink(argv[i]) < 0){
-       printf(2, "rm: %s failed to delete\n", argv[i]);
+     if(unlink(argv[n]) < 0){
+       printf(2, "rm: %s failed to delete\n", argv[n]);
        break;
       }
     }

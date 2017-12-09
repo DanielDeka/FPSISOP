@@ -1,10 +1,8 @@
-#include "xv6/types.h"
+#include "types.h"
 #include <syscall.h>
-#include "xv6/stat.h"
-#include "xv6/fcntl.h"
-#include "stdio.h"
-#include "string.h"
-#include "stdlib.h"
+#include "user.h"
+#include "stat.h"
+#include "fcntl.h"
 
 int
 main(int argc, char *argv[])
@@ -12,18 +10,18 @@ main(int argc, char *argv[])
  int i;
  int file;
  if (argc < 2){
-  printf("Usage: touch files...\n");
-  sysexit();
+  printf(1, "Usage: touch files...\n");
+  exit();
  }
 
 for(i = 1 ; i < argc; i++){
   if((file = open(argv[i], O_CREAT|O_RDWR)) < 0){
-  printf("touch : %s failed to create\n",argv[i]);
+  printf(2, "touch : %s failed to create\n",argv[i]);
   break;
   }
-  sysexit();
+  exit();
  }
 
-sysexit();
+exit();
 return 0;
 }

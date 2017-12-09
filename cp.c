@@ -8,7 +8,7 @@ char buf[512];
 int
 main(int argc, char *argv[])
 {
-  int fd, dfd, r;
+  int fd, dfd, r, w;
   char *src;
   char *dest;
   

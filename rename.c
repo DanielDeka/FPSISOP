@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include "types.h"
 #include "stat.h"
 #include "user.h"
@@ -30,3 +31,16 @@ int main(int argc, char *argv[]){
 	
 	exit();
 }
+=======
+#include <syscall.h>
+#include <stdio.h>
+#include <assert.h>
+
+int rename(const char* src, const char* dst)
+{
+  assert(0 && "not implemented yet.");
+  return 0;
+}
+
+sysexit();
+>>>>>>> 94cadf717a7e8f3484b69e2438005c45d79c9c86
